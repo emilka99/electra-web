@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Electra — Apartamenty w Krakowie</title>
+<meta name="description" content="Electra to kolekcja starannie wybranych apartamentów na wynajem w sercu Krakowa.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300;1,400&family=Urbanist:wght@700&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F5E0C5;
+  --forest900:#171B14;
+  --forest800:#20261C;
+  --forest700:#323B2B;
+  --forest600:#2A3224;
+  --sage:#9C9266;
+  --sage-light:#C9BE8F;
+  --ink:#1A1F16;
+  --gutter:88px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--forest700);
+  color:var(--cream);
+  font-family:"Satoshi",system-ui,sans-serif;
+  font-weight:300;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+
+/* ---- animacje ---- */
+@keyframes kenburns{from{transform:scale(1.12)}to{transform:scale(1)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .9s cubic-bezier(.2,.6,.2,1),transform .9s cubic-bezier(.2,.6,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  .hero__bg img,.topbar,.hero__title h1 .l1,.hero__title h1 .l2,.hero__bottom{animation:none!important}
+}
+
+.serif{font-family:"Cormorant",serif;font-weight:300}
+.serif-i{font-family:"Cormorant",serif;font-weight:300;font-style:italic}
+
+/* shared bits */
+.label{font-size:12px;font-weight:500;letter-spacing:3.12px;text-transform:uppercase;color:var(--cream)}
+.label.sage{color:var(--sage-light)}
+.label.dark{color:var(--forest700)}
+.link{
+  display:inline-flex;align-items:center;gap:9px;align-self:flex-start;
+  font-size:17px;font-weight:400;letter-spacing:1.7px;text-transform:uppercase;
+  border-bottom:1px solid var(--cream);padding-bottom:4px;line-height:1.7;
+  transition:opacity .2s;cursor:pointer;
+}
+.link .ext{width:16px;height:16px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;
+  stroke-linecap:round;stroke-linejoin:round;transition:transform .25s ease}
+.link:hover .ext{transform:translate(2px,-2px)}
+.link{transition:color .25s ease,border-color .25s ease,opacity .25s ease}
+.link:hover,.link:active,.link:focus-visible{color:#fff;border-color:#fff;opacity:1}
+.link.dark{border-color:var(--forest700);color:var(--forest700)}
+.link.dark:hover,.link.dark:active,.link.dark:focus-visible{color:#fff;border-color:#fff}
+.body-l{font-size:17px;line-height:1.7;font-weight:300}
+.wrap{max-width:1440px;margin:0 auto}
+
+/* ============ HERO ============ */
+.hero{position:sticky;top:0;z-index:0;min-height:100vh;background:var(--forest900);overflow:hidden;
+  display:flex;flex-direction:column}
+.hero__bg{position:absolute;inset:0;overflow:hidden}
+.hero__bg img{width:100%;height:100%;object-fit:cover;animation:kenburns 14s cubic-bezier(.22,.61,.36,1) forwards}
+.hero__bg::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,0) 73%,rgba(0,0,0,.54) 100%),rgba(0,0,0,.2)}
+.topbar{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;
+  padding:26px var(--gutter) 0;animation:fadeUp 1s ease .1s both}
+.topbar__tag{font-size:15px;line-height:1.8;letter-spacing:.3px}
+.topbar__logo{width:148px;height:auto}
+.lang{display:flex;gap:8px;align-items:center;font-size:15px;width:188px;justify-content:flex-end}
+.lang .active{font-weight:700}
+.lang a:not(.active){opacity:.9}
+.lang a{transition:color .25s ease,opacity .25s ease}
+.lang a:hover,.lang a:active{color:#fff;opacity:1}
+.hero__title{position:relative;z-index:2;align-self:flex-start;margin:auto 0;text-align:left;
+  color:var(--cream);padding:0 var(--gutter)}
+.hero__title h1{line-height:.86;display:inline-block}
+.hero__title .l1{display:block;text-align:left;animation:fadeUp 1.1s cubic-bezier(.2,.6,.2,1) .35s both}
+.hero__title .l2{display:block;text-align:right;animation:fadeUp 1.1s cubic-bezier(.2,.6,.2,1) .55s both}
+.hero__title .l1{font-family:"Cormorant",serif;font-weight:300;font-size:clamp(70px,10.7vw,154px);letter-spacing:-1.5px}
+.hero__title .l2{font-weight:300;letter-spacing:-.9px;font-size:clamp(38px,6.4vw,93px)}
+.hero__title .l2 .big{font-family:"Cormorant",serif;font-style:italic;font-size:clamp(50px,8vw,115px)}
+.hero__bottom{position:relative;z-index:2;display:flex;align-items:flex-end;justify-content:space-between;
+  gap:24px;padding:40px var(--gutter) 40px;animation:fadeUp 1.1s cubic-bezier(.2,.6,.2,1) .75s both}
+.hero__bottom p{max-width:360px;font-size:15px;line-height:1.5;opacity:.9}
+
+/* ============ NAV ============ */
+.nav{background:var(--forest700);display:flex;align-items:center;justify-content:space-between;
+  padding:22px var(--gutter);position:sticky;top:0;z-index:30}
+.content{position:relative;z-index:1;background:var(--forest700)}
+.nav__group{display:flex;gap:32px;font-size:17px;width:400px}
+.nav__group.right{justify-content:flex-end}
+.nav__group a{opacity:.85;transition:color .25s ease,opacity .25s ease}
+.nav__group a:hover,.nav__group a:active{opacity:1;color:#fff}
+.nav__logo{width:81px;height:auto}
+.nav__hamb{display:none;width:46px;height:46px;background:none;border:0;cursor:pointer}
+
+/* ============ BOOKING ============ */
+.booking{background:var(--forest700);padding:64px var(--gutter);display:flex;flex-direction:column;
+  align-items:center;gap:32px}
+.booking__h{font-size:32px;line-height:.9;opacity:.82;letter-spacing:-.32px;font-weight:300}
+.booking__h .ini{font-family:"Cormorant",serif;font-style:italic;font-size:40px}
+.fields{display:flex;gap:48px;width:100%;max-width:984px}
+.field{flex:1;display:flex;flex-direction:column;gap:10px;padding-bottom:18px;
+  border-bottom:1px solid rgba(245,224,197,.4)}
+.field label{font-size:11px;font-weight:400;letter-spacing:2.86px;text-transform:uppercase;opacity:.72}
+.field .row{display:flex;gap:8px;align-items:center}
+.field input{flex:1;background:none;border:0;color:var(--cream);font-family:inherit;font-weight:300;
+  font-size:18px;line-height:1.4;outline:none}
+.field input::placeholder{color:var(--cream);opacity:1}
+.field .cal{width:18px;height:18px;flex:none}
+.btn{background:var(--cream);color:var(--forest800);border:0;height:64px;width:100%;max-width:414px;
+  font-family:"Urbanist",sans-serif;font-weight:700;font-size:12px;letter-spacing:2.88px;text-transform:uppercase;
+  cursor:pointer;transition:opacity .2s}
+.btn{transition:background .25s ease,color .25s ease}
+.btn:hover,.btn:active,.btn:focus-visible{background:#fff;color:var(--forest900)}
+.booking__foot{display:flex;flex-direction:column;align-items:center;gap:8px;width:100%}
+.powered{font-size:11px;font-weight:400;letter-spacing:2.86px;text-transform:uppercase;opacity:.6;text-align:center}
+
+/* ============ APARTAMENTY ============ */
+.apart{background:var(--forest700);padding:46px var(--gutter) 60px}
+.apart__head{display:flex;flex-direction:column;gap:32px;max-width:1288px}
+.stacked{font-weight:300;letter-spacing:-.89px;line-height:.86;text-align:left}
+.stacked .a{font-family:"Cormorant",serif;font-style:italic;font-size:clamp(101px,9.8vw,141px)}
+.stacked .b{font-size:clamp(60px,6.6vw,95px)}
+.stacked .row2{display:block;margin-top:.15em;line-height:1}
+.stacked .c{font-size:clamp(45px,5.2vw,75px)}
+.stacked .d{font-family:"Cormorant",serif;font-style:italic;font-size:clamp(52px,6.8vw,98px)}
+.apart__grid{display:grid;grid-template-columns:445px 1fr;gap:40px 64px;margin-top:48px;align-items:start}
+.apart__text{display:flex;flex-direction:column;gap:16px;max-width:445px;align-self:end;align-items:flex-start}
+.apart__text p{opacity:.82}
+.apart__imgs{position:relative;min-height:600px}
+.collage-main{width:346px;height:432px;object-fit:cover;margin:0 auto}
+.collage-side{position:absolute;right:0;top:0;display:flex;flex-direction:column;gap:24px;align-items:flex-end}
+.collage-side img{object-fit:cover;filter:grayscale(1)}
+.ci1{width:240px;height:181px}
+.ci2{width:277px;height:369px}
+
+/* ============ MANIFEST (sage) ============ */
+.manifest{background:var(--sage);position:relative;overflow:hidden;
+  padding:137px var(--gutter);display:flex;flex-direction:column;align-items:center;gap:64px}
+.manifest__circles{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:130%;max-width:1500px;pointer-events:none;color:#323B2B}
+.manifest__circles .wood-svg{width:100%;height:auto;overflow:visible;display:block}
+.manifest__circles .ring{fill:none;stroke:currentColor;stroke-width:1.1;opacity:0;
+  stroke-dasharray:1;stroke-dashoffset:1}
+.manifest__circles.in .ring{animation:ringDraw 2.6s cubic-bezier(.33,.1,.2,1) forwards,
+  ringBreathe 11s ease-in-out 3s infinite}
+@keyframes ringDraw{0%{opacity:0;stroke-dashoffset:1}100%{opacity:.26;stroke-dashoffset:0}}
+@keyframes ringBreathe{0%,100%{opacity:.26}50%{opacity:.14}}
+.manifest__circles.in .ring:nth-child(1){animation-delay:0s,3s}
+.manifest__circles.in .ring:nth-child(2){animation-delay:.12s,3.1s}
+.manifest__circles.in .ring:nth-child(3){animation-delay:.24s,3.2s}
+.manifest__circles.in .ring:nth-child(4){animation-delay:.36s,3.3s}
+.manifest__circles.in .ring:nth-child(5){animation-delay:.48s,3.4s}
+.manifest__circles.in .ring:nth-child(6){animation-delay:.6s,3.5s}
+.manifest__circles.in .ring:nth-child(7){animation-delay:.72s,3.6s}
+.manifest__circles.in .ring:nth-child(8){animation-delay:.84s,3.7s}
+.manifest__circles.in .ring:nth-child(9){animation-delay:.96s,3.8s}
+.manifest__circles.in .ring:nth-child(10){animation-delay:1.08s,3.9s}
+.manifest__circles.in .ring:nth-child(11){animation-delay:1.2s,4s}
+@media(prefers-reduced-motion:reduce){
+  .manifest__circles .ring{opacity:.22;stroke-dashoffset:0;animation:none}
+}
+.manifest p,.manifest .m-img{position:relative;z-index:1}
+.statement{color:var(--forest700);text-align:center;font-size:30px;line-height:1.25;font-weight:300;
+  letter-spacing:-.3px;max-width:980px}
+.statement .em{font-family:"Cormorant",serif;font-style:italic;font-size:39px}
+.m-img{width:464px;max-width:100%;height:309px;object-fit:cover}
+
+/* ============ BOOKLET ============ */
+.booklet{position:relative;min-height:900px;display:flex;align-items:flex-start;justify-content:center;
+  overflow:hidden;text-align:center}
+.booklet__bg{position:absolute;inset:0}
+.booklet__bg img{width:100%;height:100%;object-fit:cover}
+.booklet__bg::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.2)}
+.booklet__inner{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:8px;
+  padding:52px 24px}
+.booklet__title{display:flex;align-items:center;gap:20px;color:var(--cream);text-transform:uppercase;line-height:.86}
+.booklet__title .paren{font-family:"Cormorant",serif;font-style:italic;font-size:clamp(70px,20vw,286px);letter-spacing:-2.86px}
+.booklet__title .word{font-family:"Cormorant",serif;font-size:clamp(79px,12vw,168px);letter-spacing:-1.68px}
+.booklet__title .word .B{font-style:italic}
+.booklet p{max-width:562px;opacity:.82;margin:8px 0}
+.booklet__inner .link{align-self:center}
+
+/* ============ SQUARE ============ */
+.square{background:var(--sage);display:grid;grid-template-columns:1fr 1fr;min-height:867px}
+.square__img{width:100%;height:100%;object-fit:cover}
+.square__text{display:flex;flex-direction:column;gap:16px;justify-content:center;padding:64px}
+.square__text h2{color:var(--ink);font-weight:300;font-size:clamp(32px,6vw,85px);line-height:1;max-width:592px}
+.square__text h2 .em{font-family:"Cormorant",serif;font-style:italic}
+.square__text p{color:var(--ink);font-size:15px;line-height:1.8;max-width:452px}
+
+/* ============ SEO accordion ============ */
+.seo{background:var(--forest700);padding:64px var(--gutter);display:flex;flex-direction:column;align-items:center}
+.acc{width:100%;max-width:980px;border-top:1px solid rgba(245,224,196,.18);border-bottom:1px solid rgba(245,224,196,.18)}
+.acc+.acc{border-top:0}
+.acc__sum{display:flex;align-items:center;justify-content:space-between;width:100%;padding:30px 0;
+  background:none;border:0;color:var(--cream);font-family:inherit;font-size:24px;font-weight:300;line-height:1.7;
+  cursor:pointer;text-align:left}
+.acc__sum{transition:color .25s ease}
+.acc__sum:hover,.acc__sum:active{color:#fff}
+.acc__icon{width:44px;height:44px;flex:none;transition:transform .3s}
+.acc.open .acc__icon{transform:rotate(45deg)}
+.acc__body{max-height:0;overflow:hidden;transition:max-height .35s ease;opacity:.82}
+.acc__body p{padding:0 0 30px;font-size:15px;line-height:1.8;max-width:820px}
+
+/* ============ GALERIA ============ */
+.gallery{background:var(--forest700);padding:64px 0;overflow:hidden}
+.gallery__head{padding:0 var(--gutter)}
+.gallery__h{text-align:center;font-weight:300;line-height:.86;letter-spacing:-.89px}
+.gallery__h .a{font-family:"Cormorant",serif;font-style:italic;font-size:clamp(79px,9.8vw,141px)}
+.gallery__h .b{font-size:clamp(63px,6.6vw,95px)}
+.gallery__h .row2{display:block;font-size:clamp(34px,5.2vw,75px);margin-top:.1em}
+.strip{display:flex;gap:56px;align-items:flex-end;padding:40px 88px 40px 160px;overflow-x:auto;
+  scroll-snap-type:x proximity;scroll-behavior:smooth;scrollbar-width:none;-ms-overflow-style:none}
+.strip::-webkit-scrollbar{display:none}
+.tile{flex:none;display:flex;flex-direction:column;gap:14px;scroll-snap-align:start}
+.tile img{object-fit:cover}
+.tile .cap{font-size:11px;font-weight:400;letter-spacing:2.86px;text-transform:uppercase}
+.ph{background:var(--forest600);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  font-size:11px;font-weight:700;letter-spacing:2.86px;text-transform:uppercase;text-align:center}
+.ph .f{color:var(--cream);opacity:.6}
+.ph .m{color:var(--sage-light);opacity:.8}
+.scroll-hint{padding:0 var(--gutter);text-align:right;font-size:11px;font-weight:400;letter-spacing:2.86px;
+  text-transform:uppercase;opacity:.66;background:none;border:0;color:var(--cream);font-family:inherit;
+  width:100%;cursor:pointer;transition:opacity .2s}
+.scroll-hint:hover,.scroll-hint:active{opacity:1;color:#fff}
+.contact__map-wrap{width:588px;max-width:100%;aspect-ratio:588/330}
+.contact__map-wrap iframe{width:100%;height:100%;border:0;display:block}
+
+/* ============ CONTACT / MAP ============ */
+.contact{background:var(--forest700);display:flex;flex-direction:column;align-items:center;gap:32px;
+  padding:88px var(--gutter)}
+.contact__union{width:240px;height:auto;margin:0 auto}
+.contact__cols{display:flex;gap:64px;justify-content:center}
+.contact__col{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.contact__col .lines{font-size:17px;line-height:1.7}
+.contact .link{align-self:center}
+
+/* ============ FOOTER ============ */
+.footer{background:var(--forest700);display:flex;align-items:center;justify-content:space-between;
+  padding:32px var(--gutter);font-size:11px;font-weight:400;letter-spacing:2.86px;text-transform:uppercase}
+.footer .c{opacity:.66}
+.footer .legal{opacity:.8;display:flex;gap:32px}
+.footer .legal a{transition:color .25s ease}
+.footer .legal a:hover,.footer .legal a:active{color:#fff}
+.mobile-menu a{transition:color .25s ease}
+.mobile-menu a:hover,.mobile-menu a:active{color:#fff}
+
+/* ============ MOBILE MENU overlay ============ */
+.mobile-menu{position:fixed;inset:0;z-index:50;background:var(--forest900);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:32px;transform:translateY(-100%);transition:transform .4s ease}
+.mobile-menu.open{transform:translateY(0)}
+.mobile-menu a{font-size:22px;letter-spacing:1px;text-transform:uppercase}
+.mobile-menu .close{position:absolute;top:28px;right:24px;font-size:34px;background:none;border:0;color:var(--cream);cursor:pointer}
+
+/* ===================================================== */
+/* ================== MOBILE ≤ 900px ==================== */
+/* ===================================================== */
+@media(max-width:900px){
+  :root{--gutter:20px}
+  .hero{min-height:700px}
+  .topbar__tag,.lang{display:none}
+  .topbar{padding:20px 16px 0}
+  .topbar__logo{width:81px}
+  .nav__hamb{display:block}
+  .hero__title{align-self:stretch;text-align:right;padding:0 20px;margin:112px 0 auto}
+  .hero__title h1{display:block}
+  .hero__title .l1,.hero__title .l2{text-align:right}
+  .hero__title .l1{font-size:46px;letter-spacing:-.66px}
+  .hero__title .l2{font-size:30px}
+  .hero__title .l2 .big{font-size:40px}
+
+  .booking__h{font-size:26px;white-space:normal;text-align:center}
+  .booking__h .ini{font-size:33px}
+
+  .stacked .a{font-size:84px}
+  .stacked .b{font-size:52px}
+  .stacked .c{font-size:38px}
+  .stacked .d{font-size:44px}
+  .gallery__h .a{font-size:72px}
+  .gallery__h .b{font-size:56px}
+  .gallery__h .row2{font-size:31px}
+  .hero__bottom{flex-direction:column;align-items:center;justify-content:center;padding:32px 20px}
+  .hero__bottom p{display:none}
+
+  .nav__group{display:none}
+  .nav{justify-content:space-between;padding:16px}
+  .nav__logo{width:81px}
+
+  .booking{padding:80px 32px}
+  .fields{flex-direction:column;gap:48px}
+
+  .apart{padding:24px}
+  .apart__head{gap:8px}
+  .stacked{text-align:left}
+  .apart__grid{display:flex;flex-direction:column;gap:24px;margin-top:24px}
+  .apart__text{text-align:center;align-items:center;max-width:none}
+  .apart__text .link{align-self:center}
+  .apart__imgs{min-height:0;display:flex;flex-direction:column;gap:24px;order:-1}
+  .collage-main{width:100%;height:432px}
+  .collage-side{position:static;flex-direction:column;gap:24px;align-items:center}
+  .ci1{width:219px;height:165px;align-self:flex-end}
+  .ci2{width:214px;height:286px;align-self:flex-start}
+
+  .manifest{padding:100px 16px;gap:40px}
+  .statement{font-size:22px;line-height:1.3}
+  .statement .em{font-size:29px}
+  .m-img{width:250px;height:167px}
+  .manifest__circles{width:260%}
+
+  .booklet{min-height:581px}
+  .square{grid-template-columns:1fr}
+  .square__img{height:474px}
+  .square__text{padding:64px 32px}
+
+  .seo{padding:64px 32px}
+
+  .gallery__h{text-align:center}
+  .gallery__head{padding:16px var(--gutter)}
+  .strip{padding:28px 36px!important;gap:16px}
+  .strip .tile{padding-bottom:0!important}
+  .strip .tile img,.strip .tile .ph{width:38vw!important;height:52vw!important}
+  .strip .tile:nth-child(even){margin-bottom:40px}
+
+  .contact{padding:88px 24px}
+  .contact__cols{flex-direction:column;gap:32px}
+  .contact__map-wrap{width:100%}
+  .strip{padding:40px 24px}
+
+  .footer{flex-direction:column;gap:32px;text-align:center}
+  .footer .legal{gap:24px}
+}
+</style>
+</head>
+<body>
+
+<!-- mobile menu -->
+<div class="mobile-menu" id="mmenu">
+  <button class="close" id="mclose" aria-label="Zamknij">×</button>
+  <a href="#aparty">Nasze apartamenty</a>
+  <a href="#booklet">Booklet dla gości</a>
+  <a href="#kontakt">Kontakt i lokalizacja</a>
+  <a href="#">PL / EN</a>
+</div>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="hero__bg"><img src="assets/hero2.png" alt="Wnętrze apartamentu Electra"></div>
+  <div class="topbar">
+    <span class="topbar__tag">APARTAMENTY W KRAKOWIE</span>
+    <img class="topbar__logo" src="assets/logo.svg" alt="Electra">
+    <nav class="lang"><a href="#" class="active">PL</a><span>/</span><a href="#">ENG</a></nav>
+  </div>
+  <div class="hero__title">
+    <h1>
+      <span class="l1">Apartamenty</span><br>
+      <span class="l2">z <span class="big">ch</span>arakterem</span>
+    </h1>
+  </div>
+  <div class="hero__bottom">
+    <p>Electra to kolekcja starannie wybranych apartamentów na wynajem w sercu Krakowa. Każdy urządzony z dbałością o detal, utrzymany w idealnym stanie i gotowy na Twój przyjazd.</p>
+    <a class="link" href="#booking">Sprawdź dostępność</a>
+  </div>
+</header>
+
+<main class="content">
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <div class="nav__group left">
+    <a href="#aparty">NASZE APARTAMENTY</a>
+    <a href="#booklet">BOOKLET DLA GOŚCI</a>
+  </div>
+  <img class="nav__logo" src="assets/logo-sm.svg" alt="Electra">
+  <div class="nav__group right">
+    <a href="#kontakt">KONTAKT I LOKALIZACJA</a>
+    <a href="#">PL / EN</a>
+  </div>
+  <button class="nav__hamb" id="mopen" aria-label="Menu"><img src="assets/hamburger.svg" alt=""></button>
+</nav>
+
+<!-- ============ BOOKING ============ -->
+<section class="booking" id="booking">
+  <p class="booking__h"><span class="ini">Sz</span>ukaj <span class="ini">a</span>partamentu</p>
+  <form class="fields" id="bform" onsubmit="return false">
+    <div class="field">
+      <label for="in">Przyjazd</label>
+      <div class="row"><input id="in" type="text" placeholder="dd.mm.rrrr" onfocus="(this.type='date')" onblur="if(!this.value)this.type='text'">
+        <img class="cal" src="assets/icon-calendar.svg" alt=""></div>
+    </div>
+    <div class="field">
+      <label for="out">Wyjazd</label>
+      <div class="row"><input id="out" type="text" placeholder="dd.mm.rrrr" onfocus="(this.type='date')" onblur="if(!this.value)this.type='text'">
+        <img class="cal" src="assets/icon-calendar.svg" alt=""></div>
+    </div>
+    <div class="field">
+      <label for="guests">Goście</label>
+      <div class="row"><input id="guests" type="text" value="2 osoby"></div>
+    </div>
+  </form>
+  <div class="booking__foot">
+    <button class="btn" onclick="searchApt()">Szukaj apartamentu</button>
+    <span class="powered">Powered by Guesty.com</span>
+  </div>
+</section>
+
+<!-- ============ APARTAMENTY ============ -->
+<section class="apart" id="aparty">
+  <div class="apart__head wrap">
+    <span class="label sage">NASZE APARTAMENTY</span>
+    <div class="stacked">
+      <span class="a">w</span><span class="b">nętrza,</span>
+      <span class="row2"><span class="c">w których</span><span class="d"> chce się </span><span class="c">zwolnić...</span></span>
+    </div>
+  </div>
+  <div class="apart__grid wrap">
+    <div class="apart__text">
+      <p class="body-l">Przemyślane wnętrza, wygodne łóżka, w pełni wyposażone kuchnie. [Liczba] apartamentów od [X] do [Y] m², urządzonych tak, by łatwo było poczuć się jak u siebie, na weekend czy na dłużej.</p>
+      <a class="link" href="#booking">Zarezerwuj pobyt</a>
+    </div>
+    <div class="apart__imgs">
+      <img class="collage-main" src="assets/l-hand.png" alt="Dłoń na pościeli">
+      <div class="collage-side">
+        <img class="ci1" src="assets/p9727-b.png" alt="Wnętrze z lampą">
+        <img class="ci2" src="assets/p9727-a.png" alt="Wnętrze z lampą">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MANIFEST (sage) ============ -->
+<section class="manifest">
+  <div class="manifest__circles" aria-hidden="true">
+<svg class="wood-svg" preserveAspectRatio="xMidYMid meet" width="1474" height="943" viewBox="0 0 1474 943" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path class="ring" pathLength="1" d="M604.165 11.4731C605.772 44.252 614.389 79.0759 628.097 108.287C638.989 131.489 654.054 151.06 673.813 167.272L694.198 186.698L726.121 220.749L748.593 248.333C756.271 257.743 763.95 266.339 770.147 276.772C775.175 285.264 781.977 291.19 789.927 296.969C794.371 300.203 797.062 305.691 800.964 309.78L850.31 361.546C859.157 370.811 867.482 379.699 872.761 391.509C881.649 411.414 889.015 431.444 894.815 452.435C898.091 464.265 899.197 475.887 895.838 487.509L886.135 520.997L879.458 555.362C877.852 563.562 877.122 572.409 872.969 579.795C866.585 591.208 857.133 601.286 846.074 608.359L805.742 634.169C782.937 648.775 760.924 662.775 736.011 673.541L697.223 693.885C684.35 700.645 672.874 708.177 662.128 718.026C640.116 738.202 595.11 768.811 567.672 774.799H567.631C540.11 780.808 507.352 758.024 484.88 740.602C476.033 733.737 468.292 725.641 463.222 715.605L439.185 668.096L415.212 613.471L396.6 567.151L381.16 529.197C372.292 507.435 383.142 491.786 360.42 470.232C353.451 463.639 348.986 454.25 345.815 445.09L326.201 388.546C319.817 370.122 309.927 346.232 294.111 336.321C255.657 312.263 226.216 277.356 208.773 235.376C200.114 224.025 194.46 211.005 195.336 196.546L201.136 172.927C204.016 161.221 207.041 147.993 205.351 136.163L199.509 95.3504C194.168 67.9546 189.118 41.5812 186.802 13.4552M621.233 61.7995C628.953 82.6228 645.895 94.2654 657.309 123.497C663.088 138.332 673.082 150.142 687.5 157.028L710.619 168.065L745.234 210.692L766.6 238.318L787.986 265.651C793.828 273.1 799.9 276.751 808.726 279.484C827.693 285.347 843.592 297.324 858.969 309.676L886.657 334.38C895.984 342.705 903.725 350.759 912.217 360.858L901.263 331.125C898.091 322.529 892.311 315.477 885.989 308.842C870.779 296.093 854.692 286.078 836.977 277.106C817.468 267.216 800.693 253.862 788.362 235.918L768.874 207.542C758.358 192.248 747.8 177.642 734.593 164.56L698.371 133.617C686.874 123.79 675.023 114.4 666.885 101.548L651.404 77.1353C638.906 57.4387 634.774 34.362 631.832 11.2227M653.219 11.2854C654.075 39.5575 665.968 63.3645 681.909 85.1268C691.84 98.6682 702.085 109.58 715.355 120.222L754.435 151.54C769.229 165.415 780.391 181.502 792.222 197.881L814.13 228.198C826.357 242.637 841.359 251.504 859.678 255.698C896.359 264.086 928.116 278.232 943.326 314.12C948.772 326.952 951.485 339.826 953.613 353.764L966.111 435.534C970.493 464.161 965.089 484.504 951.818 509.542C942.283 527.549 941.031 546.911 948.48 566.045C954.677 582.006 952.319 598.219 940.802 611.197L906.04 645.624L881.566 668.993L852.876 699.456C835.871 717.525 819.18 734.342 799.358 749.469L733.654 799.65C700.061 825.293 662.587 841.025 620.774 847.368C572.889 854.629 525.421 849.851 480.582 831.239C437.85 813.504 399.938 787.464 367.848 754.101C309.718 693.655 287.163 617.289 274.414 535.707C268.092 495.25 258.328 456.524 247.791 416.901C249.689 401.107 245.746 386.668 238.548 372.668C233.54 362.944 228.574 353.826 219.79 346.983L196.233 328.517L165.624 293.088C153.71 279.297 142.047 265.588 136.038 247.874C131.385 234.145 137.164 210.797 131.593 180.563L124.645 142.86C116.571 99.0436 110.833 55.0602 106.827 11.3063M132.929 12.3077L140.607 99.7323L144.655 139.584L144.905 163.6C145.218 195.774 149.746 226.863 162.536 256.429C166.709 266.068 173.073 273.517 179.249 281.905L185.467 290.334L214.97 321.006C225.465 331.918 235.418 342.142 244.411 354.327C261.812 377.884 274.707 403.047 282.114 431.59L313.954 554.298C330.187 616.851 349.362 674.146 394.514 721.698C426.062 754.915 463.806 780.224 506.83 795.915C538.399 807.432 570.468 811.543 603.873 808.976C643.871 805.909 681.596 795.038 715.564 773.652L784.627 730.169C801.924 719.278 817.656 707.718 831.093 692.32L915.784 595.235C918.747 591.834 922.19 585.241 921.669 581.401L918.852 560.536C915.972 539.087 921.856 519.203 933.895 501.78C945.935 484.358 956.617 461.553 947.896 441.501L925.633 394.033C931.496 430.464 934.02 462.492 920.98 496.856L908.169 530.658L901.972 566.337C899.259 581.944 893.668 594.526 883.506 606.022C872.198 618.833 859.95 628.452 845.511 637.612C832.721 645.707 822.184 656.411 810.646 666.343L750.847 717.921C731.359 734.739 704.151 743.377 678.591 760.695C647.377 781.852 599.909 807.766 562.581 803.572C527.611 799.629 496.815 779.807 469.148 758.629C456.879 749.219 447.052 738.035 439.373 724.661L413.647 679.884L384.29 630.726L348.298 574.599C339.472 560.849 331.981 547.12 326.076 532.035C320.171 516.949 320.025 500.862 325.471 484.838C327.286 479.476 325.575 471.881 325.158 466.122C323.99 449.701 320.589 434.637 312.368 420.511L281.863 368.161C275.562 357.353 269.115 348.464 260.164 339.576C223.337 303.041 199.426 269.678 182.149 219.915C178.915 210.588 180.313 200.135 181.106 190.683L182.796 170.381C183.297 164.247 182.337 158.342 179.812 152.834C174.534 141.295 171.779 129.527 171.028 116.883L169.714 94.4534L167.293 62.1752L164.393 13.4137" stroke="black"/>
+<path class="ring" pathLength="1" d="M565.816 12.5398C554.132 58.0881 573.14 111.252 592.878 152.753L592.941 152.732L634.525 228.138L663.381 275.606C678.383 300.289 698.414 319.777 722.262 336.114C739.935 348.216 754.332 361.966 766.079 380.015L804.575 439.146C817.908 459.635 828.778 500.343 816.218 514.907C808.101 524.296 801.028 534.875 790.762 542.678C780.497 550.482 772.213 557.472 765.244 568.843C757.712 581.112 750.388 595.196 738.6 604.418C715.711 622.32 691.633 637.927 672.291 659.773L650.341 684.581C641.494 694.576 629.684 701.232 618.229 708.159C610.53 712.812 601.35 714.564 592.211 713.208C552.546 707.345 525.776 692.03 502.136 659.794L483.316 634.13C473.76 621.11 466.561 607.694 459.134 593.359L438.206 552.986C420.909 519.602 438.769 465.227 455.607 431.989L467.5 402.82C474.115 381.892 471.986 360.714 462.576 340.872C438.519 290.128 389.382 246.583 343.896 214.054C334.861 207.586 326.265 201.598 318.608 193.711C288.228 162.434 278.734 114.361 274.958 71.7338C273.998 60.8214 273.477 50.6809 274.332 39.5599L276.252 14.6472M579.859 12.2894C572.535 57.5457 592.273 103.407 613.994 142.8L628.975 164.416C647.44 191.082 666.156 216.641 687.251 241.325C703.651 260.541 722.534 274.333 745.777 284.244C764.264 292.131 781.185 302.146 795.415 316.376C806.682 327.643 816.28 339.578 824.689 353.12L859.033 408.537C867.4 422.058 872.908 436.392 877.519 451.498C882.402 467.564 883.904 483.463 883.653 500.155C883.34 520.353 875.6 538.025 861.161 551.859C843.447 568.822 825.69 582.718 799.15 577.544C795.311 576.793 792.285 578.733 789.823 581.863C778.89 595.717 769.188 610.907 754.645 621.506C741.479 631.104 729.294 640.243 717.359 651.448C704.256 663.737 691.883 675.693 680.72 689.839C671.685 701.315 661.378 710.663 649.214 718.654C639.845 724.809 631.103 731.319 620.524 735.513C599.993 743.65 577.146 745.591 555.593 740.354C526.841 733.364 500.446 704.424 484.13 680.033L458.57 641.829C450.913 630.395 445.697 618.544 439.416 606.337L419.365 567.341C407.701 544.66 403.403 521.146 405.489 495.669C407.868 466.646 413.168 439.563 423.705 412.501C428.086 401.255 431.279 389.508 431.592 377.386C431.821 368.247 428.671 359.233 425.228 350.991C405.99 305.13 366.493 263.358 328.143 232.04C317.919 223.694 308.279 215.786 299.871 205.645C262.335 160.389 256.075 96.2921 256.972 38.9759C257.661 37.5988 259.372 34.1142 259.351 32.6537" stroke="black"/>
+<path class="ring" pathLength="1" d="M533.057 61.2562L535.999 91.9485L537.042 113.481C538.106 135.661 539.629 156.776 544.094 178.476L553.63 225.005C559.931 255.781 581.443 280.756 580.9 310.447L582.09 333.023C582.862 347.67 583.383 361.233 579.94 375.588C579.231 378.53 580.295 381.931 582.882 383.204C592.585 387.919 595.255 398.331 590.206 407.428C595.902 406.969 599.72 403.881 602.37 400C609.089 390.173 617.414 382.828 625.989 374.858C637.486 364.154 652.279 361.775 665.174 371.853C676.128 380.408 683.118 392.948 685.351 407.157C688.898 410.85 691.506 414.877 693.342 419.592L713.497 439.351C725.683 453.352 731.608 471.129 730.461 490.179C729.125 512.316 723.596 534.037 714.478 554.067C707.968 568.402 696.534 578.709 682.346 584.572L657.684 591.875C653.427 593.127 648.983 595.151 645.978 598.197C641.367 602.871 636.067 603.497 629.891 605.207L612.469 610.027C601.014 611.363 589.997 609.819 578.689 608.17C567.38 606.522 557.782 603.392 548.309 597.592C543.114 594.399 537.042 592.939 530.824 593.44C518.18 594.42 506.579 591.103 496.334 583.424C478.494 570.071 464.911 551.605 457.609 530.406C450.181 508.832 452.893 486.319 464.64 466.998L481.812 443.316C491.556 429.879 496.814 415.753 494.957 398.894C491.327 365.865 478.411 334.526 463.513 304.939C461.594 301.121 457.609 299.138 455.167 296.092L424.287 257.554L409.703 234.561L388.066 211.985C379.156 202.7 375.38 191.266 375.505 178.247C375.63 166.02 374.378 154.231 372.584 142.046L363.382 79.6175L352.553 14.143M388.566 13.5378C388.337 49.4257 391.174 84.2077 397.351 119.428L404.257 150.037C410.37 177.162 411.476 213.008 432.905 236.397L449.179 250.94C473.675 281.257 491.076 315.455 503.282 352.448C509.834 372.312 514.507 391.737 515.864 412.54C516.97 429.649 513.715 445.298 507.539 461.009L498.588 483.815C488.406 509.771 516.511 545.596 535.164 549.268C552.503 552.69 564.959 562.538 576.268 575.558C581.86 582.006 608.818 590.811 619.897 584.447C629.37 560.41 654.428 540.881 680.301 535.915C685.079 534.997 689.857 531.867 692.716 527.757C708.239 505.452 715.354 470.336 696.534 450.577L684.036 437.453C676.253 441.021 668.116 440.666 661.105 435.929C644.789 424.913 649.212 403.756 637.611 399.478C628.556 396.14 620.919 413.166 609.944 421.011C599.387 428.543 585.908 429.336 574.661 423.452C569.174 419.342 566.482 413.249 565.585 406.531C547.6 384.309 562.935 364.926 562.706 351.259L561.892 299.91C561.788 293.943 558.95 287.663 556.634 282.3L543.948 252.839L533.349 221.437L521.435 149.536L519.64 56.666C519.473 48.0696 519.724 40.1824 521.018 31.9407L523.897 13.6423" stroke="black"/>
+<path class="ring" pathLength="1" d="M704.733 936.42L798.563 879.438C831.425 858.113 860.01 833.493 886.53 804.699C908.355 780.996 930.43 758.587 954.821 737.806C978.628 717.525 998.074 723.597 1023.26 710.368C1062.53 689.754 1093.99 657.642 1113.52 617.769L1126.96 581.068L1137.1 550.229C1139.96 541.487 1146.34 534.58 1153.79 529.489C1167.37 520.246 1175.93 508.04 1182.71 493.372C1190.6 476.284 1195.77 459.132 1194.94 439.853C1192.22 376.841 1171.42 319.65 1129.11 272.808C1111.71 253.549 1093.26 236.649 1071.94 221.96C1051.01 207.542 1028.25 198.236 1003.19 194.084L973.746 189.222C956.678 186.406 941.029 180.772 925.819 172.238C890.202 152.25 857.381 129.048 826.793 102.028C813.982 90.7187 802.757 79.0133 793.263 64.9294C788.527 57.8979 786.461 49.4268 783.686 41.498C780.035 31.1073 777.322 21.4049 775.82 10.0334V10.0543M670.452 934.333C718.045 908.649 763.343 880.356 806.971 848.119C829.422 831.511 848.743 813.066 867.292 792.264L939.694 716.962C959.87 695.971 986.432 693.008 1005.73 677.047C1043.69 645.687 1067.6 614.723 1082.1 566.921L1096.33 528.863C1111.37 497.545 1138.12 495.938 1145.76 486.215C1153.39 476.492 1160.15 466.936 1165.83 456.19C1170.84 446.718 1170.52 435.388 1169.58 424.809C1165.64 380.492 1148.97 338.72 1119.11 305.587C1099.56 283.866 1077.36 265.964 1052.99 250.065C1034.67 238.088 1015.29 230.243 994.298 224.568L964.669 216.535C948.895 212.257 934.54 205.643 920.519 196.963C876.848 169.881 824.769 133.763 790.196 96.5191C777.406 82.7482 769.206 66.9534 763.489 49.1138C759.357 36.1775 755.623 23.8461 754.579 10.0543" stroke="black"/>
+<path class="ring" pathLength="1" d="M867.336 942.53L905.644 918.034L986.037 864.39L1026.04 841.668L1107.68 797.101C1133.66 781.055 1156.75 761.943 1177.45 739.68C1187.09 729.289 1194.69 718.043 1201.8 706.025C1219.93 675.416 1206.18 648.229 1210.71 642.094C1214.43 637.066 1220.21 633.874 1225.25 630.41C1246.35 615.95 1264.19 599.467 1280.4 579.75C1309.45 544.446 1340.62 506.305 1353.26 461.507C1372.39 393.717 1361.94 327.471 1332 264.563C1324.61 249.018 1314.97 236.082 1303.44 223.667L1282.55 217.115C1274.12 214.465 1266.9 209.583 1259.04 205.473L1232.93 191.827C1205.39 177.43 1198.67 155.647 1189.14 149.283L1156.96 127.813C1138.62 115.565 1119.99 105.3 1099.73 96.3487L1035.84 68.1183L960.436 31.5418L960.415 31.5C945.768 24.4059 933.582 16.4355 922.816 4.37549M858.406 929.969L965.84 854.479C983.053 842.378 1000.75 833.406 1019.25 823.599L1078.7 792.114C1105.05 778.155 1128.46 761.171 1150.12 740.64C1165 726.556 1177.22 710.991 1186.36 692.65C1191.6 682.113 1191.87 670.596 1189.93 659.058C1186.84 640.675 1187.2 630.952 1201.8 618.225C1214.15 607.479 1225.67 596.817 1235.23 583.401L1272.56 530.905L1299.2 488.11C1322.01 446.464 1325.55 396.033 1313.05 350.359C1304.69 319.813 1293.42 290.268 1275.62 263.853C1256.13 234.913 1230.18 212.4 1202.99 191.055L1153.19 151.954C1132.97 136.076 1112.9 121.762 1089.36 111.058L1001.87 71.2062L941.01 40.0131C926.3 32.4808 914.658 20.9423 905.31 7.50525L904.205 5.91949" stroke="black"/>
+<path class="ring" pathLength="1" d="M815.672 929.743C823.767 913.781 834.054 900.365 847.804 888.931L864.6 874.972C877.599 864.143 891.099 855.276 905.516 846.45C914.947 840.691 923.794 835.829 934.373 831.99L973.537 817.739L1017.92 791.721L1067.14 763.532C1093.82 748.238 1114.13 724.953 1124.5 696.055C1135.6 665.112 1158.96 667.929 1163.35 631.144L1167.41 596.987L1167.75 577.729C1170.84 562.518 1182.33 552.023 1196.75 547.162C1225.63 537.439 1250.12 518.368 1264.81 491.515C1272.91 476.701 1277.12 461.052 1280.77 444.777L1290.79 400.126C1293.02 381.869 1292.29 362.59 1283.05 346.44L1256.51 300.12L1221.73 245.078C1215.07 234.541 1207.29 224.797 1197.75 216.722C1190.14 210.275 1179.83 206.081 1170.29 203.431L1132.69 192.978C1115.19 188.116 1101.48 158.488 1097.02 156.005L1071.37 141.734C1053.7 131.906 1035.34 125.709 1015.62 121.223L963.876 109.455C952.609 106.889 941.509 105.324 931.41 99.7737L900.551 82.7898C872.341 67.2871 859.217 39.3278 853.5 7.75903L853.542 7.77991M794.41 940.906C800.106 925.862 805.803 910.651 815.108 897.256C821.347 888.263 830.173 881.753 838.623 875.264L866.979 853.502C883.233 841.004 899.758 830.968 917.994 821.391L1002.91 776.76L1056.54 747.383C1079.99 734.53 1097.75 717.274 1106.99 691.84C1112.6 676.421 1121.37 663.505 1133.7 652.718C1140.12 647.084 1143.44 640.22 1144.73 631.79L1149.41 601.244L1150.97 579.836C1152.56 558.179 1168.23 542.384 1186.17 531.158C1221.62 508.958 1246.91 476.283 1249.29 433.656L1249.46 374.733C1249.5 362.882 1245.99 353.388 1241.28 342.685C1227.38 311.157 1212.48 280.861 1192.85 252.464C1188.01 245.474 1183.19 238.631 1176.51 233.393C1163.66 223.357 1147.88 216.618 1131.55 215.012L1109.47 212.841C1088.21 206.791 1069.24 197.235 1050.99 184.987C1039.22 177.079 1027.39 170.548 1014.64 164.455L979.191 147.534L949.896 134.535C938.462 129.465 925.881 125.563 916.053 117.238C892.017 96.8943 872.32 72.1068 857.276 44.5023L841.377 8.19733" stroke="black"/>
+<path class="ring" pathLength="1" d="M513.798 928.118C517.22 928.159 520.913 927.721 524.189 926.866L596.32 908.212L659.061 895.464C694.552 888.265 744.837 866.754 775.529 846.139L816.362 818.722L841.046 803.386C867.002 785.359 890.12 764.285 910.505 740.103C927.343 720.135 936.419 693.261 952.736 677.487C966.82 663.862 996.114 660.983 1015.92 625.867C1022.15 614.788 1029.21 604.647 1037.28 594.84C1047.4 582.53 1055.43 569.719 1062.88 555.635C1069.89 542.386 1078.51 530.952 1090.22 521.542L1111.64 504.328C1137.54 483.526 1136.31 445.885 1126.58 415.151C1119.99 394.328 1110.35 375.549 1097.71 357.584C1079.91 332.275 1060.44 309.073 1038.18 287.645C1025.66 275.606 1012.43 265.528 996.615 258.601C965.213 244.85 940.092 252.425 911.59 227.449C892.332 210.59 873.845 193.439 851.499 180.795L804.302 154.088C787.944 144.824 772.817 135.539 757.815 124.355C740.726 119.702 736.428 113.839 730.211 97.2513L730.231 97.2723C715.313 70.565 707.426 42.0008 706.049 11.204M496.793 925.468C501.968 920.648 509.709 917.038 517.053 915.244L588.328 897.696L692.674 866.962C714.228 860.619 733.716 851.251 752.369 838.982L809.31 801.55C831.239 787.133 852.25 773.654 871.07 755.147C883.068 743.358 895.461 732.258 904.266 717.819L925.799 682.536C934.688 667.972 946.476 657.644 961.708 650.112C974.665 643.706 986.955 635.11 994.362 622.528C1004.44 605.419 1014.73 589.875 1026.97 574.288C1042.71 554.279 1045.86 530.535 1074.94 502.826L1090.61 487.907C1101.13 477.892 1103.78 464.351 1100.75 450.162C1096 427.67 1086.17 407.285 1072.42 388.527C1052.62 361.507 1030.52 337.053 1005.82 314.331C989.5 299.329 971.181 288.041 950.921 279.424C928.282 269.805 909.963 256.994 892.603 239.718C868.566 215.786 840.837 197.8 811.48 181.066L764.325 154.213C740.059 138.397 721.322 117.637 708.865 91.3467C696.409 65.0567 689.065 38.5582 685.33 10.2652" stroke="black"/>
+<path class="ring" pathLength="1" d="M995.572 936.813L1010.03 921.269L1056.33 883.42C1079.93 864.14 1105.93 850.077 1134.1 838.351L1201.55 810.288C1216.35 804.133 1229.91 796.976 1243.05 788.171C1283.66 761.005 1282.63 722.133 1292.27 711.116L1307.78 693.381C1321.38 677.795 1339.14 672.975 1361.46 644.807C1378.32 623.525 1388.4 599.53 1391.19 572.239C1393.09 553.648 1396.35 535.996 1400.17 517.698L1405.86 490.406L1417.82 436.199C1427.87 400.373 1434.86 364.694 1437.16 327.471C1438.04 313.199 1435.82 300.221 1430.92 287.139L1417.57 251.606L1404.34 215.948C1398.83 201.071 1387.81 189.679 1374.48 181.061L1341.97 160.092C1298.55 132.07 1260.64 90.9868 1246.35 40.0344L1246.39 40.0137M974.436 936.938C986.141 919.641 999.933 905.245 1015.67 891.766L1043.31 868.084C1065.6 848.972 1089.01 832.342 1115.8 820.094L1175.12 792.949L1223.84 770.039C1235.79 764.406 1245.89 755.893 1253.51 745.085C1260.41 735.278 1264.08 724.157 1268.17 712.952C1270.99 705.212 1271.05 697.512 1268.57 689.667C1264.08 675.5 1267.46 661.458 1277.67 650.837C1286.95 641.177 1298.3 635.188 1309.9 628.428L1346.73 601.721C1358.67 593.062 1365.2 580 1368.58 565.416L1384.54 496.332L1402.38 420.738C1410.7 392.32 1415.02 363.734 1417.5 334.19C1418.61 321.128 1417.88 308.88 1413.67 296.528L1391.47 231.45C1385.52 214.028 1375.21 201.989 1360 191.911L1312.2 160.238C1281.88 137.328 1257.6 108.681 1241.17 74.441C1231.06 50.2793 1223.86 26.8059 1217.28 0.119568" stroke="black"/>
+<path class="ring" pathLength="1" d="M428.648 927.828C419.905 911.449 405.675 900.724 388.232 893.484L388.211 893.443L337.301 872.285C318.459 864.461 301.496 828.761 298.367 808.689L289.019 748.744C284.783 721.619 278.023 696.226 263.793 672.753L244.472 640.851C239.59 632.776 239.444 622.907 237.357 613.83C233.768 598.202 232.454 583.305 231.118 567.322L230.263 557.036L225.235 492.521C220.519 431.762 198.548 397.836 151.623 361.802C139.187 352.246 128.755 341.792 117.508 331.088L95.8506 310.495C88.2348 303.254 83.1229 293.427 80.16 283.015C74.4221 262.902 69.7901 242.642 69.3728 221.63L71.6054 190.437L72.3148 163.48C75.0481 140.486 72.7529 118.307 65.9509 97.0454C59.1489 75.784 55.5185 54.5434 54.3918 32.3848L53.2441 9.80865M404.34 926.806L388.17 915.831C379.49 909.947 370.726 905.649 360.753 902.206C342.266 895.842 324.552 888.831 307.589 879.296C294.965 872.202 285.847 862.312 279.045 849.626C271.075 834.791 264.753 819.476 261.06 802.847L249.876 752.687C245.766 734.263 240.257 717.3 231.244 700.775L212.82 666.953C204.432 651.554 203.055 634.529 208.23 617.899C209.92 612.432 211.255 606.11 211.026 600.372L209.586 564.985L204.933 493.898C204.14 481.838 201.845 470.509 197.108 459.575C188.095 438.794 175.451 420.871 157.84 406.662L123.184 378.723C104.009 363.262 89.8832 343.545 79.9514 320.76C71.4594 301.293 64.5321 281.889 58.7734 261.316L57.438 244.29L54.9343 205.564C53.9328 189.937 51.9088 174.893 53.5571 159.286C55.4767 140.883 53.6614 123.44 48.1739 105.704C40.5164 80.9585 36.6982 56.3794 35.6341 30.4651L34.7368 8.64032" stroke="black"/>
+<path class="ring" pathLength="1" d="M193.31 931.372L147.302 846.138C130.527 815.049 111.436 763.388 116.735 728.835V728.814L125.352 672.708C127.397 659.501 131.758 647.128 138.289 635.568L153.499 608.632C163.828 590.354 170.734 571.033 170.838 549.918L171.026 513.842L169.858 489.931L168.585 467.668C167.813 454.231 162.805 441.711 151.663 434.576L131.549 421.702C122.223 415.735 114.023 409.412 106.49 401.212C86.5435 379.492 70.3313 355.873 55.4963 330.376C42.1009 307.382 18.9824 269.888 19.3372 244.808L19.9005 203.349C20.1509 185.364 23.8649 168.317 27.704 150.749L28.2883 108.873L24.4491 55.5416M172.299 930.037L134.512 862.309C115.149 827.61 91.3008 768.792 95.2234 729.899L101.462 668.118C103.069 652.24 107.388 637.217 114.231 622.903L126.02 598.262C133.803 581.966 137.621 565.128 136.014 546.809L131.925 500.071L130.631 483.212L129.818 455.858C129.671 451.309 123.412 445.718 119.928 442.484C103.152 426.856 89.1724 410.769 75.1929 392.637C49.0907 358.773 28.2257 322.176 15.0598 281.322C9.80186 265.026 6.88081 248.877 6.38005 231.83L8.46655 184.07L9.57233 166.836L9.73929 89.5931L8.63351 74.7999L0.496094 7.71881" stroke="black"/>
+<path class="ring" pathLength="1" d="M1312.43 0.835097H1312.41L1324.64 39.8526C1349.4 103.658 1403.61 121.831 1411.73 133.307L1420.32 145.45L1438.33 176.352C1442.21 183.008 1444.17 190.978 1444.17 198.698C1444.15 207.399 1445.97 214.764 1447.34 223.194L1457.98 288.626L1459.99 295.804C1465.02 313.915 1466.89 333.298 1464.24 352.035L1457.94 396.686L1455.11 418.782C1453.21 433.68 1449.66 446.679 1442.61 459.907L1434.2 475.681C1426.48 499.029 1426.77 522.648 1427.63 546.873L1429.86 610.553C1428.36 646.232 1411.1 680.367 1389.82 708.493L1361.38 746.071C1348.09 763.598 1337.51 781.855 1328.58 802.094C1313.08 837.231 1301.56 872.659 1293.55 911.51M1329.94 1.04365C1334.19 17.9235 1338.62 33.3635 1346.77 48.4281C1360.13 73.0905 1380.37 92.6829 1404.49 106.642L1423.2 118.806C1430.26 123.396 1434.99 131.2 1437.93 139.087L1445.95 160.682L1453.39 180.525C1464.66 210.57 1469.02 242.16 1471.99 274.188C1474.03 296.409 1471.15 317.608 1470.59 339.829L1469.61 378.805C1469.08 400.046 1467.37 420.806 1461.36 441.233L1450.51 478.143C1443.98 500.385 1442.86 522.523 1443.96 545.725L1446.63 601.477C1447.8 625.576 1441.88 648.298 1432.17 670.289C1423.66 689.61 1412.56 706.574 1400.67 723.975L1376.65 759.133C1365.22 775.887 1357.9 794.228 1354.37 814.3L1337.86 908.276" stroke="black"/>
+</svg>
+</div>
+  <p class="statement">Electra to <span class="em">ciepło</span> materiałów, <span class="em">spokój</span> wnętrz i Kraków za oknem — miejsce, w którym chce się zostać dłużej.</p>
+  <img class="m-img" src="assets/p2456-balkon.png" alt="Balkon z widokiem">
+  <p class="statement">Kolory wyciągnięte <span class="em">wprost</span> z wnętrz: terakota, szałwia i dąb — <span class="em">nic</span> nie powstało przy biurku.</p>
+</section>
+
+<!-- ============ BOOKLET ============ -->
+<section class="booklet" id="booklet">
+  <div class="booklet__bg"><img src="assets/booklet-bg.png" alt="Kraków"></div>
+  <div class="booklet__inner">
+    <span class="label">DLA GOŚCI</span>
+    <div class="booklet__title">
+      <span class="paren">(</span>
+      <span class="word"><span class="B">B</span>ooklet</span>
+      <span class="paren">)</span>
+    </div>
+    <p class="body-l">Zaplanuj pobyt, zanim przekręcisz klucz: nasze ulubione miejsca w Krakowie, od porannej kawy po wieczorne wino.</p>
+    <a class="link" href="#" target="_blank" rel="noopener">Otwórz booklet<svg class="ext" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 13v6a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h6"/></svg></a>
+  </div>
+</section>
+
+<!-- ============ SQUARE ============ -->
+<section class="square">
+  <img class="square__img" src="assets/p8187-salon.png" alt="Salon z sofą">
+  <div class="square__text">
+    <span class="label dark">Rodzina Square</span>
+    <h2>Electra jest <span class="em">częścią</span> Square</h2>
+    <p>Za Electrą stoi zespół Square, który od 2019 prowadzi apartamenty w Krakowie. Zajmujemy się wszystkim, co sprawia, że pobyt jest prosty: rezerwacją, przygotowaniem apartamentu, zameldowaniem i kontaktem z gośćmi przez cały pobyt. Electra zachowuje swój własny charakter, a Square dba o to, by wszystko działało bez zarzutu.</p>
+    <a class="link dark" href="#" target="_blank" rel="noopener">Więcej o Square<svg class="ext" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 13v6a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h6"/></svg></a>
+  </div>
+</section>
+
+<!-- ============ SEO accordion ============ -->
+<section class="seo">
+  <div class="acc">
+    <button class="acc__sum" onclick="toggleAcc(this)">Czy w apartamentach jest wyposażona kuchnia?<img class="acc__icon" src="assets/icon-plus.svg" alt=""></button>
+    <div class="acc__body"><p>Tak. Każdy apartament Electra ma w pełni wyposażoną kuchnię — płytę, lodówkę, naczynia i podstawowe akcesoria, byś mógł czuć się jak u siebie.</p></div>
+  </div>
+  <div class="acc">
+    <button class="acc__sum" onclick="toggleAcc(this)">Jak wygląda zameldowanie?<img class="acc__icon" src="assets/icon-plus.svg" alt=""></button>
+    <div class="acc__body"><p>Zameldowanie jest bezkontaktowe i możliwe o dowolnej porze. Instrukcje wraz z kodem dostępu wysyłamy przed przyjazdem.</p></div>
+  </div>
+  <div class="acc">
+    <button class="acc__sum" onclick="toggleAcc(this)">Czy można przyjechać ze zwierzęciem?<img class="acc__icon" src="assets/icon-plus.svg" alt=""></button>
+    <div class="acc__body"><p>W wybranych apartamentach tak. Zaznacz to przy rezerwacji — potwierdzimy dostępność i ewentualne warunki pobytu z pupilem.</p></div>
+  </div>
+</section>
+
+<!-- ============ GALERIA ============ -->
+<section class="gallery">
+  <div class="gallery__head">
+    <div class="gallery__h">
+      <span class="a">ch</span><span class="b">wile,</span>
+      <span class="row2">we wnętrzach Electry</span>
+    </div>
+  </div>
+  <div class="strip" id="strip">
+    <div class="tile"><img src="assets/l-dog.png" style="width:432px;height:576px" alt="Pies na pościeli"><span class="cap">01</span></div>
+    <div class="tile" style="padding-bottom:160px"><img src="assets/p9652.png" style="width:300px;height:375px;filter:grayscale(1)" alt="Salon granat"><span class="cap">02</span></div>
+    <div class="tile"><img src="assets/p2456.png" style="width:576px;height:384px" alt="Balkon"><span class="cap">03</span></div>
+    <div class="tile" style="padding-bottom:90px"><div class="ph" style="width:316px;height:421px"><span class="f">p8207.jpg</span><span class="m">B&amp;W</span></div><span class="cap">04</span></div>
+    <div class="tile"><div class="ph" style="width:403px;height:504px"><span class="f">p2534.jpg</span><span class="m">kolor</span></div><span class="cap">05</span></div>
+    <div class="tile" style="padding-bottom:200px"><div class="ph" style="width:288px;height:384px"><span class="f">p0928.jpg</span><span class="m">B&amp;W</span></div><span class="cap">06</span></div>
+  </div>
+  <button class="scroll-hint" id="scrollBtn">(3) Przewiń →</button>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact" id="kontakt">
+  <img class="contact__union" src="assets/union.svg" alt="Electra">
+  <div class="contact__cols">
+    <div class="contact__col">
+      <span class="label">ADRES</span>
+      <div class="lines">Electra Apartments<br>[ulica i numer]<br>[kod] Kraków</div>
+    </div>
+    <div class="contact__col">
+      <span class="label">KONTAKT</span>
+      <div class="lines">[+48 000 000 000]<br>[e-mail]<br>Instagram</div>
+    </div>
+  </div>
+  <div class="contact__map-wrap">
+    <iframe title="Mapa — ul. Cieszyńska, Kraków" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+      src="https://www.google.com/maps?q=ul.%20Cieszy%C5%84ska,%20Krak%C3%B3w&output=embed"></iframe>
+  </div>
+  <a class="link" href="https://www.google.com/maps/dir/?api=1&destination=ul.+Cieszyńska,+Kraków" target="_blank" rel="noopener">Wyznacz trasę</a>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <span class="c">© 2026 Electra Apartments</span>
+  <span class="legal"><a href="#">Regulamin</a><a href="#">Polityka prywatności</a></span>
+</footer>
+</main>
+
+<script>
+  var mm=document.getElementById('mmenu');
+  document.getElementById('mopen').onclick=function(){mm.classList.add('open')};
+  document.getElementById('mclose').onclick=function(){mm.classList.remove('open')};
+  mm.querySelectorAll('a').forEach(function(a){a.onclick=function(){mm.classList.remove('open')}});
+
+  function toggleAcc(btn){
+    var acc=btn.parentElement, body=acc.querySelector('.acc__body');
+    var open=acc.classList.toggle('open');
+    body.style.maxHeight=open?body.scrollHeight+'px':null;
+  }
+  // scroll-reveal
+  var revealSel='.booking__h,.fields,.booking__foot,.apart__head,.apart__grid,.manifest>p,.manifest .m-img,'
+    +'.booklet__inner,.square__img,.square__text,.acc,.gallery__h,.strip,.scroll-hint,'
+    +'.contact__union,.contact__cols,.contact__map-wrap,.contact .link';
+  var noAnim=location.search.indexOf('noanim')>-1;
+  if(!noAnim) document.querySelectorAll(revealSel).forEach(function(el){el.classList.add('reveal')});
+  if(noAnim){/* skip */}
+  else if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
+    document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in')});
+  }
+
+  // słoje drewna — animacja rysowania przy wejściu w widok + delikatny ruch przy scrollu
+  var wood=document.querySelector('.manifest__circles');
+  if(wood && !noAnim && 'IntersectionObserver' in window){
+    new IntersectionObserver(function(es){es.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('in');}});},{threshold:.1}).observe(wood);
+  } else if(wood){ wood.classList.add('in'); }
+  var woodSvg=wood?wood.querySelector('.wood-svg'):null;
+  if(woodSvg && !noAnim){
+    window.addEventListener('scroll',function(){
+      var r=wood.getBoundingClientRect(), vh=window.innerHeight;
+      var p=(vh-r.top)/(vh+r.height); // 0..1 przez widok
+      p=Math.max(0,Math.min(1,p));
+      woodSvg.style.transform='rotate('+((p-.5)*6).toFixed(2)+'deg) scale('+(1+p*0.06).toFixed(3)+')';
+    },{passive:true});
+  }
+
+  var strip=document.getElementById('strip');
+  document.getElementById('scrollBtn').onclick=function(){
+    var amt=strip.clientWidth*0.8;
+    var atEnd=strip.scrollLeft+strip.clientWidth>=strip.scrollWidth-10;
+    strip.scrollBy({left:atEnd?-strip.scrollWidth:amt,behavior:'smooth'});
+  };
+  function searchApt(){
+    var i=document.getElementById('in').value, o=document.getElementById('out').value, g=document.getElementById('guests').value;
+    alert('Szukam apartamentu\nPrzyjazd: '+(i||'—')+'\nWyjazd: '+(o||'—')+'\nGoście: '+(g||'—'));
+  }
+</script>
+</body>
+</html>
